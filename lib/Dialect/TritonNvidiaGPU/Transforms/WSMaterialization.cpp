@@ -712,6 +712,11 @@ struct WSMaterializationPass
 
     // TODO: More flexible way to set num-warps
     // One dma, one math warp group, set num-warps = 8
+    // TODO: This pass tries to change the module's num-warps property without
+    // modifying its tensors' warpsPerCta properties.  This generates illegal
+    // IR.  Moreover it's not clear how to fix this.  For now I've disabled this
+    // part of the pass.  See https://github.com/openai/triton/issues/2658.
+    /*
     auto i32_ty = IntegerType::get(mod->getContext(), 32);
     mod->setAttr("triton_gpu.num-warps",
                  IntegerAttr::get(i32_ty, llvm::APInt(32, 8)));
@@ -726,6 +731,7 @@ struct WSMaterializationPass
       mod->setAttr("triton_gpu.num-warps",
                    IntegerAttr::get(i32_ty, llvm::APInt(32, 12)));
     }
+    */
     mod->removeAttr("async.num-agents");
   }
 };
