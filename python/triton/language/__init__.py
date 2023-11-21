@@ -85,6 +85,7 @@ from .core import (
     store,
     static_range,
     tensor,
+    tanh,
     trans,
     # triton,
     uint16,
@@ -106,7 +107,7 @@ from .random import (
     randint4x,
     randn,
     randn4x,
-    uint_to_uniform_float,
+    uint32_to_uniform_float,
 )
 
 __all__ = [
@@ -203,7 +204,7 @@ __all__ = [
     "triton",
     "uint16",
     "uint32",
-    "uint_to_uniform_float",
+    "uint32_to_uniform_float",
     "uint64",
     "uint8",
     "umulhi",

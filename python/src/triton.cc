@@ -1,4 +1,4 @@
-﻿#include <mutex>
+#include <mutex>
 #include <stack>
 #include <unordered_map>
 
@@ -1508,6 +1508,10 @@ void init_triton_ir(py::module &&m) {
            [](TritonOpBuilder &self, mlir::Value &val) -> mlir::Value {
              return self.create<mlir::math::SinOp>(val);
            })
+      .def("create_tanh",
+           [](TritonOpBuilder &self, mlir::Value &val) -> mlir::Value {
+             return self.create<mlir::math::TanhOp>(val);
+           })
       .def("create_log",
            [](TritonOpBuilder &self, mlir::Value &val) -> mlir::Value {
              return self.create<mlir::math::LogOp>(val);
@@ -1857,14 +1861,7 @@ void init_triton_translation(py::module &m) {
   m.def("get_num_warps", [](mlir::ModuleOp mod) {
     auto shared = mod->getAttrOfType<mlir::IntegerAttr>("triton_gpu.num-warps");
     assert(shared);
-    int num_warps = shared.getInt();
-
-    if (auto attr = mod->getAttrOfType<mlir::IntegerAttr>(
-            "triton_gpu.num-warp-groups-per-cta")) {
-      num_warps *= attr.getInt();
-    }
-
-    return num_warps;
+    return shared.getInt();
   });
 
   m.def(

@@ -1427,7 +1427,12 @@ def cos(x: tl.tensor, builder: ir.builder) -> tl.tensor:
 
 @_check_dtype(dtypes=["fp32", "fp64"])
 def sin(x: tl.tensor, builder: ir.builder) -> tl.tensor:
-    return tl.tensor(builder.create_sin(x.handle), x.type)
+  return tl.tensor(builder.create_sin(x.handle), x.type)
+
+
+@_check_dtype(dtypes=["fp32", "fp64"])
+def tanh(x: tl.tensor, builder: ir.builder) -> tl.tensor:
+  return tl.tensor(builder.create_tanh(x.handle), x.type)
 
 
 @_check_dtype(dtypes=["fp32", "fp64"])
